@@ -25,8 +25,8 @@ function init() {
     totPoints = document.getElementById("totPoints");
     countGames = document.getElementById("countGames");
 
-    if (localStorage.TP > 0)
-    totPoints.innerHTML = Number(localStorage.TP);
+   // if (localStorage.TP > 0)
+   // totPoints.innerHTML = Number(localStorage.TP);
 
     // Lägg på händelsehanterare
     newGameBtn.addEventListener("click",newGame);
@@ -40,7 +40,7 @@ window.addEventListener("load",init); // Se till att init aktiveras då sidan ä
 // Återställer bockar & kryss. Klonar allbBrickNames. Återställer classer i brädet samt knapparna.
 function newGame() {
     totalGames++;
-    countGames.innerHTML = totalGames;
+    //countGames.innerHTML = totalGames;
     pointsThisGame = 0;     // Poäng återställs
     msgElem.innerHTML = ""; // Fältet där omgångens poäng skrivs ut återställs
     r1mark.innerHTML = "";  // Bock och kryss för rader återställs
