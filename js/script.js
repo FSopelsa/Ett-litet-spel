@@ -5,29 +5,26 @@ var newGameBtn            // Referens till "nytt spel-knappen"
 var newBricksBtn          // Referens till "nya brickor-knappen"
 var boardElem             // Referens till hela brädet
 var boardElemEmpty        // Referens till tomma fält på brädet
-var newBricksElem         // Referens till fält där nya brickor visas
+var newBricksElemEmpty    // Referens till de tomma fält där nya brickor varit
+var newBricksElemBrick    // Referens till nya brickor
 var dragBrickElem         // Referens till brickor som dras
 var pointsThisGame = [];  // Här räknas poäng från aktuellt spel upp
 var totalPoints = [];     // Här räknas totalpoäng upp
-var totalGames;
 // ------------------------------
-// Initiera globala variabler och koppla funktion till knappar
-function init() {
+// Laddar in localStorage, initiera globala variabler och kopplar funktion till knappar
+function initGame() {
+    writeOutPointsAndGames();
     // Referenser till element i gränssnittet
-    
     newGameBtn = document.getElementById("newGameBtn");
     newBricksBtn = document.getElementById("newBricksBtn");
     boardElem = document.getElementById("board").getElementsByTagName("img");
     boardElemEmpty = document.getElementById("board").getElementsByClassName("empty");
-    newBricksElem = document.getElementById("newBricks").getElementsByTagName("img");
+    newBricksElemBrick = document.getElementById("newBricks").getElementsByClassName("brick");
     newBricksElemEmpty = document.getElementById("newBricks").getElementsByClassName("empty");
+    newBricksElem = document.getElementById("newBricks").getElementsByTagName("img");
     msgElem = document.getElementById("message");
     totPoints = document.getElementById("totPoints");
     countGames = document.getElementById("countGames");
-
-   // if (localStorage.TP > 0)
-   // totPoints.innerHTML = Number(localStorage.TP);
-
     // Lägg på händelsehanterare
     newGameBtn.addEventListener("click",newGame);
     newBricksBtn.addEventListener("click",newBricks);
@@ -35,22 +32,22 @@ function init() {
     newBricksBtn.disabled = true;
     newGameBtn.disabled = false;
 } // End init
-window.addEventListener("load",init); // Se till att init aktiveras då sidan är inladdad
+window.addEventListener("load",initGame); // Se till att init aktiveras då sidan är inladdad
 // ------------------------------
-// Återställer bockar & kryss. Klonar allbBrickNames. Återställer classer i brädet samt knapparna.
+// totalPoints får summan av totalpoängen. Återställer gränssnittet - bockar och omgångens poäng etc. Klonar allbBrickNames. Återställer classer i brädet. 
 function newGame() {
-    totalGames++;
-    //countGames.innerHTML = totalGames;
-    pointsThisGame = 0;     // Poäng återställs
+    localStorage.fn222hnGames = Number(localStorage.fn222hnGames)+1; 
+    writeOutPointsAndGames();
+    pointsThisGame = 0;     // Omgångspoäng återställs
     msgElem.innerHTML = ""; // Fältet där omgångens poäng skrivs ut återställs
-    r1mark.innerHTML = "";  // Bock och kryss för rader återställs
-    r2mark.innerHTML = "";  // -  '  '  -
-    r3mark.innerHTML = "";  // -  '  '  -
-    r4mark.innerHTML = "";  // -  '  '  -
-    c1mark.innerHTML = "";  // Bock och kryss för kollumner återställs
-    c2mark.innerHTML = "";  // -  '  '  -
-    c3mark.innerHTML = "";  // -  '  '  -
-    c4mark.innerHTML = "";  // -  '  '  -
+    for (let i = 0; i < 5; i++) {
+        rmark = document.getElementById("r"+[i]+"mark")
+        if (rmark)
+        rmark.innerHTML = "";
+        cmark = document.getElementById("c"+[i]+"mark")
+        if (rmark)
+        cmark.innerHTML = "";
+    } // End for
     tempList = allBrickNames.slice(1);  // Kopia av allBrickNames
     for (let i = 0; i < boardElem.length; i++) {
         boardElem[i].classList.remove('brick');
@@ -62,20 +59,20 @@ function newGame() {
         newBricksBtn.disabled = false;
 } // End newGame
 // ------------------------------
-// 4 nya brickor väljs slumpmässigt. Dessa får händdelshanterare och nya classer
+// 4 nya brickor väljs slumpmässigt. Dessa får händdelshanterare och nya classer. Nya brickor-knappen avaktiveras.
 function newBricks(e) {
     for (let i = 0; i < 4; i++) {
         r = Math.floor(tempList.length*Math.random());
         newBricksElem[i].src = "img/" + tempList[r] + ".png";
         newBricksElem[i].id = tempList[r];
         tempList.splice(r,1);
-    } // End for 
-    for (let i = 0; i < newBricksElem.length; i++) {
-        newBricksElem[i].addEventListener("dragstart",dragstartBrick);
-        newBricksElem[i].addEventListener("dragend",dragendBrick);
-        newBricksElem[i].draggable = true;
         newBricksElem[i].classList.remove('empty');
         newBricksElem[i].classList.add('brick');
+    } // End for 
+    for (let i = 0; i < newBricksElemBrick.length; i++) {
+        newBricksElemBrick[i].addEventListener("dragstart",dragstartBrick);
+        newBricksElemBrick[i].addEventListener("dragend",dragendBrick);
+        newBricksElemBrick[i].draggable = true;
     } // End for  
     newBricksBtn.disabled = true;
 } // End newBricks
@@ -92,49 +89,53 @@ function dragstartBrick(e) {
     } // End for 
 } // End dragstartBricks
 // ------------------------------
-// Lägger på händelsehanterare
+// Lägger på händelsehanterare på brädet och tar bort dem på de nu tomma rutorna över "nya brickor".
 function dragendBrick() {
     for (let i = 0; i < boardElem.length; i++) {
         boardElem[i].removeEventListener("dragover",brickOverBoard);
         boardElem[i].removeEventListener("drop",brickOverBoard);
         boardElem[i].removeEventListener("dragleave",brickOverBoard);
     } // End for 
+    for (let i = 0; i < newBricksElemEmpty.length; i++) {
+        newBricksElemEmpty[i].removeEventListener("dragstart",dragstartBrick);
+        newBricksElemEmpty[i].removeEventListener("drop",brickOverBoard);
+        newBricksElemEmpty[i].removeEventListener("dragend",dragendBrick);
+        newBricksElemEmpty[i].draggable = false;
+    } 
 } // End dragendBrick
 // ------------------------------
 // Ser till att bilder flyttas till där man drar dem. Ser till att rutan man drar bild från får klassen empty istället för brick och gör motsatsen där bilden släppts. Ändrar också bakgrundsbild på det rutor man drar bilder över.
 function brickOverBoard(e) {
     e.preventDefault();
     if (e.type == "drop") {
+        dragBrickElem.src = "img/empty.png";
         dragBrickElem.classList.remove('brick');
         dragBrickElem.classList.add('empty');
-        dragBrickElem.src = "img/empty.png";
-        let dropBrickElem = this;
-        if (dropBrickElem.src = "img/empty.png") {
+        let dropBrickElem = this; // Här släpps bilden
         dropBrickElem.src = e.dataTransfer.getData("text");
         dropBrickElem.id = e.dataTransfer.getData("id");
         this.style.backgroundColor = "";
         this.classList.remove('empty');
         this.classList.add('brick');
-        }
     }
     if (e.type == "dragover") {
-        this.style.backgroundColor = "#999";
+            this.style.backgroundColor = "#999";
     }
     if (e.type == "dragleave") {
-        this.style.backgroundColor = "";
+            this.style.backgroundColor = "";
     }
-    controllForNewBricks();
-    checkIfFull();
+    controlForNewBricks();
+    checkIfBoardIsFull();
 } // End brickOverBoard
 // ------------------------------
 // Kontrollerar om newBricksElem är tom och visar isåfall Nya brickor-knappen igen
-function controllForNewBricks() {
+function controlForNewBricks() {
     if (newBricksElemEmpty.length == 4)
         newBricksBtn.disabled = false;
 } // End controllForNewBricks 
 // ------------------------------
 // Kontrollerar om brädet är fullt och går isf över till funktionen countPoints
-function checkIfFull() {
+function checkIfBoardIsFull() {
     if (boardElemEmpty.length == 0) {
         newBricksBtn.disabled = true;
         countPoints();
@@ -142,104 +143,41 @@ function checkIfFull() {
 } // End checkIfFull
 // ------------------------------
 // Kontrollerar stigande serie i kollumner och rader samt räknar upp poäng.
-function countPoints() {                        //Kontrollerar stigare serie för rader
-    r1 = document.getElementsByClassName("r1");
-    for (let i = 0; i < r1.length; i++) {
-        if (Number(r1[0].id)<Number(r1[1].id) && Number(r1[1].id)<Number(r1[2].id) && Number(r1[2].id)<Number(r1[3].id)) {
-            r1mark.innerHTML = "&check;";
+function countPoints() {  //Kontrollerar stigare serie för rader
+    for (let i = 1; i < 5; i++) {
+        r = document.getElementsByClassName("r"+[i]);
+        rmark = document.getElementById("r"+[i]+"mark")
+        for (let i = 0; i < r.length; i++) {
+            if (Number(r[0].id)<Number(r[1].id) && Number(r[1].id)<Number(r[2].id) && Number(r[2].id)<Number(r[3].id)) {
+            rmark.innerHTML = "&check;";
+            pointsThisGame++;
+            }
+            else 
+                rmark.innerHTML = "&cross;";
+        } // End for 
+    } // End for
+    for (let i = 1; i < 5; i++) {
+        c = document.getElementsByClassName("c"+[i]);
+        cmark = document.getElementById("c"+[i]+"mark")
+        for (let i = 0; i < c.length; i++) {
+        if (Number(c[0].id)<Number(c[1].id) && Number(c[1].id)<Number(c[2].id) && Number(c[2].id)<Number(c[3].id)) {
+            cmark.innerHTML = "&check;";
             pointsThisGame++;
         }
         else 
-            r1mark.innerHTML = "&cross;";
-    } // End for 
-    r2 = document.getElementsByClassName("r2");
-    for (let i = 0; i < r2.length; i++) {
-        if (Number(r2[0].id)<Number(r2[1].id) && Number(r2[1].id)<Number(r2[2].id) && Number(r2[2].id)<Number(r2[3].id)) {
-            r2mark.innerHTML = "&check;";
-            pointsThisGame++;
-        }
-        else 
-            r2mark.innerHTML = "&cross;";
-    } // End for 
-    r3 = document.getElementsByClassName("r3");
-    for (let i = 0; i < r3.length; i++) {
-        if (Number(r3[0].id)<Number(r3[1].id) && Number(r3[1].id)<Number(r3[2].id) && Number(r3[2].id)<Number(r3[3].id)) {
-            r3mark.innerHTML = "&check;";
-            pointsThisGame++;
-        }
-        else 
-            r3mark.innerHTML = "&cross;";
-    } // End for 
-    r4 = document.getElementsByClassName("r4");
-    for (let i = 0; i < r4.length; i++) {
-        if (Number(r4[0].id)<Number(r4[1].id) && Number(r4[1].id)<Number(r4[2].id) && Number(r4[2].id)<Number(r4[3].id)) {
-            r4mark.innerHTML = "&check;";
-            pointsThisGame++;
-        }
-        else 
-            r4mark.innerHTML = "&cross;";
-    } // End for                              //Kontrollerar stigade serie för kollumner
-    c1 = document.getElementsByClassName("c1");
-    for (let i = 0; i < c1.length; i++) {
-        if (Number(c1[0].id)<Number(c1[1].id) && Number(c1[1].id)<Number(c1[2].id) && Number(c1[2].id)<Number(c1[3].id)) {
-            c1mark.innerHTML = "&check;";
-            pointsThisGame++;
-        }
-        else 
-            c1mark.innerHTML = "&cross;";
-    } // End for 
-    c2 = document.getElementsByClassName("c2");
-    for (let i = 0; i < c2.length; i++) {
-        if (Number(c2[0].id)<Number(c2[1].id) && Number(c2[1].id)<Number(c2[2].id) && Number(c2[2].id)<Number(c2[3].id)) {
-            c2mark.innerHTML = "&check;";
-            pointsThisGame++; 
-        }
-        else 
-            c2mark.innerHTML = "&cross;";
-    } // End for 
-    c3 = document.getElementsByClassName("c3");
-    for (let i = 0; i < c3.length; i++) {
-        if (Number(c3[0].id)<Number(c3[1].id) && Number(c3[1].id)<Number(c3[2].id) && Number(c3[2].id)<Number(c3[3].id)) {
-            c3mark.innerHTML = "&check;";
-            pointsThisGame++;
-        }    
-        else 
-            c3mark.innerHTML = "&cross;";
-    } // End for 
-    c4 = document.getElementsByClassName("c4");
-    for (let i = 0; i < c4.length; i++) {
-        if (Number(c4[0].id)<Number(c4[1].id) && Number(c4[1].id)<Number(c4[2].id) && Number(c4[2].id)<Number(c4[3].id)) {
-            c4mark.innerHTML = "&check;";
-            pointsThisGame++;
-        }
-        else 
-            c4mark.innerHTML = "&cross;";
+            cmark.innerHTML = "&cross;";
+        } // End for 
     } // End for
     showPoints();
-} // End countPoints
+} //End countPoints    
 // ------------------------------
-// Tar fram, skriver ut och sparar rätt poäng för rundan, samt aktiverar knapp för nytt spel.
+// Tar fram och skriver ut rätt poäng för rundan, samt aktiverar knapp för nytt spel.
 function showPoints() {
     let pTG = parseFloat(pointsThisGame)/4;
     msgElem.innerHTML = "Du fick denna runda: " + pTG + " poäng.";
+    totalPoints = [0]; // totalPoints blir 0
+    totalPoints.push(Number(localStorage.fn222hnPoints));
     totalPoints.push(Number(pTG));
     newGameBtn.disabled = false;
-    newTotalPoints();
+    savePoints();
 } // End showPoints
-// ------------------------------
-// Räknar ut summan av de poäng som sparats i arrayen totalPoints.
-function getSum(total, num) {
-    return total + Math.round(num);
-} // End getSum
-// ------------------------------
-// Skriver ut summan av de poäng som sparats i arrayen totalPoints.
-function newTotalPoints(item) {
-    totPoints.innerHTML = totalPoints.reduce(getSum, 0);
-    //let storeTotalPoints = totalPoints.reduce(getSum, 0);
-
-} // End newTotalPoints
-// ------------------------------
-function localStore() {
-    localStorage.TP = totalPoints.reduce(getSum, 0);
-}
-
