@@ -25,5 +25,5 @@ function writeOutPointsAndGames() {
 		countGames.innerHTML = localStorage.fn222hnGames;
 	  }
 	  else
-	  countGames.innerHTML =  "";
+	  	countGames.innerHTML =  "0";
 } // End writeOutPointsAndGames
