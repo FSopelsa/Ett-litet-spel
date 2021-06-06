@@ -36,7 +36,6 @@ window.addEventListener("load",initGame); // Se till att init aktiveras då sida
 // ------------------------------
 // totalPoints får summan av totalpoängen. Återställer gränssnittet - bockar och omgångens poäng etc. Klonar allbBrickNames. Återställer classer i brädet. 
 function newGame() {
-    if (localStorage.fn222hnGames)
     localStorage.fn222hnGames = Number(localStorage.fn222hnGames)+1; 
     writeOutPointsAndGames();
     pointsThisGame = 0;     // Omgångspoäng återställs

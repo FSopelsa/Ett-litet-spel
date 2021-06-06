@@ -24,4 +24,6 @@ function writeOutPointsAndGames() {
     if (localStorage.fn222hnGames) {
 		countGames.innerHTML = localStorage.fn222hnGames;
 	  }
+	  else
+	  countGames.innerHTML =  "";
 } // End writeOutPointsAndGames
