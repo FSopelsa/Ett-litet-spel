@@ -19,10 +19,10 @@ function getSum(total, num) {
 // Skriver ut localStorag 
 function writeOutPointsAndGames() {
 	if (localStorage.fn222hnPoints) {
-        totPoints.innerHTML = localStorage.fn222hnPoints;
+        totPoints.innerHTML = Number(localStorage.fn222hnPoints);
 	}
     if (localStorage.fn222hnGames) {
-		countGames.innerHTML = localStorage.fn222hnGames;
+		countGames.innerHTML = Number(localStorage.fn222hnGames);
 	  }
 	  else
 	  	countGames.innerHTML =  "0";
