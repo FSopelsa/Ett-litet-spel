@@ -41,10 +41,10 @@ function newGame() {
     pointsThisGame = 0;     // Omgångspoäng återställs
     msgElem.innerHTML = ""; // Fältet där omgångens poäng skrivs ut återställs
     for (let i = 0; i < 5; i++) {
-        rmark = document.getElementById("r"+[i]+"mark")
+        rmark = document.getElementById("r"+[i]+"mark") // Återställer bockar/kryss för rader
         if (rmark)
         rmark.innerHTML = "";
-        cmark = document.getElementById("c"+[i]+"mark")
+        cmark = document.getElementById("c"+[i]+"mark") // Återställer bockar/kryss för kolumner
         if (rmark)
         cmark.innerHTML = "";
     } // End for
