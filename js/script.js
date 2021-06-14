@@ -205,7 +205,7 @@ function getSum(total, num) {
 function writeOutPointsAndGames() {
 	console.log(localStorage.GamesFn222hnN,"localStorage.fn222hnGames")
 	console.log(localStorage.PointsFn222hnN,"localStorage.fn222hnPoints")
-	if (localStorage.PointsFn222hnN < 0) {
+	if (localStorage.PointsFn222hnN) {
         totPoints.innerHTML = Number(localStorage.PointsFn222hnN);
 	}
 	else {
