@@ -41,7 +41,7 @@ window.addEventListener("load",initGame); // Se till att init aktiveras då sida
 // ------------------------------
 // totalPoints får summan av totalpoängen. Återställer gränssnittet - bockar och omgångens poäng etc. Klonar allbBrickNames. Återställer classer i brädet. 
 function newGame() {
-    localStorage.GamesFn222hnn = Number(localStorage.GamesFn222hnn)+1; 
+    localStorage.GamesFn222hnN = Number(localStorage.GamesFn222hnN)+1; 
     writeOutPointsAndGames();
     pointsThisGame = 0;     // Omgångspoäng återställs
     msgElem.innerHTML = ""; // Fältet där omgångens poäng skrivs ut återställs
@@ -182,7 +182,7 @@ function showPoints() {
     msgElem.innerHTML = "Du fick denna runda: " + pTG + " poäng.";
     console.log(pTG,"ptg")
     totalPoints = [0]; // totalPoints blir 0
-    totalPoints.push(Number(localStorage.PointsFn222hn));
+    totalPoints.push(Number(localStorage.PointsFn222hnN));
     totalPoints.push(Number(pTG));
     newGameBtn.disabled = false;
     savePoints();
@@ -197,22 +197,26 @@ function getSum(total, num) {
  function savePoints() {
 	let newTotalPoints = totalPoints.reduce(getSum, 0) // Summan av totalPoints
 	console.log(newTotalPoints,"newtotalpoints")
-	localStorage.fn222hnPoints = Number(newTotalPoints);
+	localStorage.PointsFn222hnN = Number(newTotalPoints);
     writeOutPointsAndGames();
 } // End savePointsAndGames
 // ------------------------------
 // Skriver ut localStorag 
 function writeOutPointsAndGames() {
-	console.log(localStorage.GamesFn222hnn,"localStorage.fn222hnGames")
-	console.log(localStorage.PointsFn222hnn,"localStorage.fn222hnPoints")
-	if (localStorage.PointsFn222hnn) {
-        totPoints.innerHTML = Number(localStorage.PointsFn222hnn);
+	console.log(localStorage.GamesFn222hnN,"localStorage.fn222hnGames")
+	console.log(localStorage.PointsFn222hnN,"localStorage.fn222hnPoints")
+	if (localStorage.PointsFn222hnN) {
+        totPoints.innerHTML = Number(localStorage.PointsFn222hnN);
 	}
-	else 
+	else {
 		totPoints.innerHTML = Number(0);
-    if (localStorage.GamesFn222hnn) {
-		countGames.innerHTML = Number(localStorage.GamesFn222hnn);
+        localStorage.PointsFn222hnN;
+    }
+    if (localStorage.GamesFn222hnN) {
+		countGames.innerHTML = Number(localStorage.GamesFn222hnN);
 	}
-	else
+	else {
+        localStorage.GamesFn222hnN = 0;
 	  	countGames.innerHTML =  Number(0);
+    }
 } // End writeOutPointsAndGames 
