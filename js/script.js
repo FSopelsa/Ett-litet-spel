@@ -35,13 +35,13 @@ function initGame() {
     totPoints = document.getElementById("totPoints");
 	countGames = document.getElementById("countGames");
 
-    
+
 } // End init
 window.addEventListener("load",initGame); // Se till att init aktiveras då sidan är inladdad
 // ------------------------------
 // totalPoints får summan av totalpoängen. Återställer gränssnittet - bockar och omgångens poäng etc. Klonar allbBrickNames. Återställer classer i brädet. 
 function newGame() {
-    localStorage.GamesFn222hn = Number(localStorage.GamesFn222hn)+1; 
+    localStorage.GamesFn222hnn = Number(localStorage.GamesFn222hnn)+1; 
     writeOutPointsAndGames();
     pointsThisGame = 0;     // Omgångspoäng återställs
     msgElem.innerHTML = ""; // Fältet där omgångens poäng skrivs ut återställs
@@ -203,16 +203,16 @@ function getSum(total, num) {
 // ------------------------------
 // Skriver ut localStorag 
 function writeOutPointsAndGames() {
-	console.log(localStorage.GamesFn222hn,"localStorage.fn222hnGames")
-	console.log(localStorage.PointsFn222hn,"localStorage.fn222hnPoints")
-	if (localStorage.PointsFn222hn) {
-        totPoints.innerHTML = Number(localStorage.PointsFn222hn);
+	console.log(localStorage.GamesFn222hnn,"localStorage.fn222hnGames")
+	console.log(localStorage.PointsFn222hnn,"localStorage.fn222hnPoints")
+	if (localStorage.PointsFn222hnn) {
+        totPoints.innerHTML = Number(localStorage.PointsFn222hnn);
 	}
 	else 
-		totPoints.innerHTML = "0";
-    if (localStorage.GamesFn222hn) {
-		countGames.innerHTML = Number(localStorage.GamesFn222hn);
+		totPoints.innerHTML = Number(0);
+    if (localStorage.GamesFn222hnn) {
+		countGames.innerHTML = Number(localStorage.GamesFn222hnn);
 	}
 	else
-	  	countGames.innerHTML =  "0";
+	  	countGames.innerHTML =  Number(0);
 } // End writeOutPointsAndGames 
