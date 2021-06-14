@@ -12,6 +12,7 @@ function getSum(total, num) {
 // Sparar total poäng i localStorage
  function savePoints() {
 	let newTotalPoints = totalPoints.reduce(getSum, 0) // Summan av totalPoints
+	console.log(newTotalPoints,"newtotalpoints")
 	localStorage.fn222hnPoints = Number(newTotalPoints);
     writeOutPointsAndGames();
 } // End savePointsAndGames
