@@ -175,6 +175,7 @@ function countPoints() {  //Kontrollerar stigare serie för rader
 function showPoints() {
     let pTG = parseFloat(pointsThisGame)/4;
     msgElem.innerHTML = "Du fick denna runda: " + pTG + " poäng.";
+    console.log(pTG,"pTG")
     totalPoints = [0]; // totalPoints blir 0
     totalPoints.push(Number(localStorage.fn222hnPoints));
     totalPoints.push(Number(pTG));
