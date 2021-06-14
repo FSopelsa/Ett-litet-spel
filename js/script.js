@@ -210,7 +210,7 @@ function writeOutPointsAndGames() {
 	}
 	else {
 		totPoints.innerHTML = Number(0);
-        localStorage.PointsFn222hnN;
+        localStorage.PointsFn222hnN = Number(0);
     }
     if (localStorage.GamesFn222hnN) {
 		countGames.innerHTML = Number(localStorage.GamesFn222hnN);
