@@ -18,6 +18,8 @@ function getSum(total, num) {
 // ------------------------------
 // Skriver ut localStorag 
 function writeOutPointsAndGames() {
+	console.log(localStorage.fn222hnGames,"localStorage.fn222hnGames")
+	console.log(localStorage.fn222hnPoints,"localStorage.fn222hnPoints")
 	if (localStorage.fn222hnPoints) {
         totPoints.innerHTML = Number(localStorage.fn222hnPoints);
 	}
