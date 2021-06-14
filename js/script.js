@@ -197,7 +197,7 @@ function getSum(total, num) {
  function savePoints() {
 	let newTotalPoints = totalPoints.reduce(getSum, 0) // Summan av totalPoints
 	console.log(newTotalPoints,"newtotalpoints")
-	localStorage.PointsFn222hnN = Number(newTotalPoints);
+	localStorage.PointsFn222hnN = parseFloat(newTotalPoints);
     writeOutPointsAndGames();
 } // End savePointsAndGames
 // ------------------------------
