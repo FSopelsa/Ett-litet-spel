@@ -180,43 +180,9 @@ function countPoints() {  //Kontrollerar stigare serie för rader
 function showPoints() {
     let pTG = parseFloat(pointsThisGame)/4;
     msgElem.innerHTML = "Du fick denna runda: " + pTG + " poäng.";
-    console.log(pTG,"ptg")
     totalPoints = [0]; // totalPoints blir 0
     totalPoints.push(Number(localStorage.PointsFn222hnN));
     totalPoints.push(Number(pTG));
     newGameBtn.disabled = false;
     savePoints();
 } // End showPoints
-// ------------------------------
-// Räknar ut summan av de poäng som sparats i arrayen totalPoints.
-function getSum(total, num) {
-    return total + Math.round(num);
-} // End getSum
-// ------------------------------
-// Sparar total poäng i localStorage
- function savePoints() {
-	let newTotalPoints = totalPoints.reduce(getSum, 0) // Summan av totalPoints
-	console.log(newTotalPoints,"newtotalpoints")
-	localStorage.PointsFn222hnN = parseFloat(newTotalPoints);
-    writeOutPointsAndGames();
-} // End savePointsAndGames
-// ------------------------------
-// Skriver ut localStorag 
-function writeOutPointsAndGames() {
-	console.log(localStorage.GamesFn222hnN,"localStorage.fn222hnGames")
-	console.log(localStorage.PointsFn222hnN,"localStorage.fn222hnPoints")
-	if (localStorage.PointsFn222hnN) {
-        totPoints.innerHTML = Number(localStorage.PointsFn222hnN);
-	}
-	else {
-		totPoints.innerHTML = "0";
-        localStorage.PointsFn222hnN = Number(0);
-    }
-    if (localStorage.GamesFn222hnN) {
-		countGames.innerHTML = Number(localStorage.GamesFn222hnN);
-	}
-	else {
-        localStorage.GamesFn222hnN = 0;
-	  	countGames.innerHTML =  Number(0);
-    }
-} // End writeOutPointsAndGames 
