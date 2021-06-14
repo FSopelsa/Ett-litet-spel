@@ -21,10 +21,10 @@ function writeOutPointsAndGames() {
 	console.log(localStorage.fn222hnGames,"localStorage.fn222hnGames")
 	console.log(localStorage.fn222hnPoints,"localStorage.fn222hnPoints")
 	if (localStorage.fn222hnPoints) {
-        totPoints.innerHTML = Number(localStorage.fn222hnPoints);
+        totPoints.innerHTML = parseInt(localStorage.fn222hnPoints);
 	}
     if (localStorage.fn222hnGames) {
-		countGames.innerHTML = Number(localStorage.fn222hnGames);
+		countGames.innerHTML = parseInt(localStorage.fn222hnGames);
 	  }
 	  else
 	  	countGames.innerHTML =  "0";
