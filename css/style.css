@@ -65,7 +65,7 @@
 	background-color: #FFF;
 }
 
-/* ----- Stil för VG-uppgiften ----- */
+
 main {
 	position: relative;
 }
@@ -81,7 +81,6 @@ main {
 	background-color: #C99;
 }
 
-/* ----- Stil för guldstjärneuppgiften ----- */
 #moveCount {
 	font-size: 2em;
 }

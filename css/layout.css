@@ -29,12 +29,12 @@ body {
 
 header {
 	grid-area: header;
-	background-color: #FC6;
+	background-color: rgb(201, 142, 23);
 	box-shadow: 5px 5px 10px #999, -5px 5px 10px #999;
 	margin-bottom: 10px;
 }
 header h1 {
-	background-color:#F90;
+	background-color:rgb(218, 162, 72);
 }
 header h1, header h2, header h3 {
 	margin: 0;
@@ -55,7 +55,7 @@ main h2 {
 
 footer {
 	grid-area: footer;
-	background-color: #FC6;
+	background-color: rgb(255, 212, 133);
 	border-top: 1px solid #F90;
 	box-shadow: 0px -5px 10px #999;
 	padding: 4px;
